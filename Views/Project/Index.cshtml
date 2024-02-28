@@ -1,0 +1,77 @@
+@model IEnumerable<ProjectApp.Models.ProjectModel>
+
+@{
+    ViewData["Title"] = "Projekt";
+}
+
+<h1>Projekt</h1>
+
+<p>
+    <a asp-action="Create">Lägg till</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Techniques)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Url)
+                </td>
+                <td>
+                    @if (item.ImageName != "-")
+                    {
+                        <img src="~/images/@Html.DisplayFor(modelItem => item.ImageName)" alt="@Html.DisplayFor(modelItem => item.Title)" class="img-fluid border rounded">
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.ImageName)
+                    }
+                </td>
+                <td>
+                    @if (item.Techniques.Any())
+                    {
+                        foreach (var technique in item.Techniques)
+                        {
+                            <span>@technique.Name</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>-</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Ändra</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,86 @@
+@model ProjectApp.Models.ProjectModel
+
+@{
+    ViewData["Title"] = "Ändra";
+}
+
+<h1>Ändra</h1>
+
+<h4>Projekt</h4>
+<hr>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control">
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <br>
+            @if (Model.ImageName != "-")
+            {
+                <span>Befintlig bild</span>
+                <br>
+                <img src="~/images/@Model.ImageName" alt="@Model.Title" class="img-fluid border rounded">
+                <br>
+                <br>
+            }
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label">@(Model.ImageName != "-" ? "Välj en ny bild" :
+                    "")</label>
+                <input asp-for="ImageFile" class="form-control" accept="image/*">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label">Språk</label>
+                @if (ViewBag.Techniques.Count == 0)
+                {
+                    <p>Inga språk tillagda än...</p>
+                }
+                else
+                {
+                    @foreach (var technique in ViewBag.Techniques)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="@("technique_" + technique.Id)"
+                                name="selectedTechniques" value="@technique.Id" @(Model.Techniques.Any(l => l.Id == technique.Id) ?
+                        "checked" : "")>
+                            <label class="form-check-label" for="@("technique_" + technique.Id)">
+                                @technique.Name
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Spara" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<div>
+    <a asp-action="Index">Gå tillbaka</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

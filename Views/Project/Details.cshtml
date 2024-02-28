@@ -1,0 +1,65 @@
+@model ProjectApp.Models.ProjectModel
+
+@{
+    ViewData["Title"] = "Detaljer";
+}
+
+<h1>Detaljer</h1>
+
+<div>
+    <h4>Projekt</h4>
+    <hr>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.ImageName != "-")
+            {
+                <img src="~/images/@Model.ImageName" alt="@Model.Title" class="w-50 border rounded">
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.ImageName)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Techniques)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Techniques.Any())
+            {
+                foreach (var technique in Model.Techniques)
+                {
+                    <span>@technique.Name</span>
+                }
+            }
+            else
+            {
+                <span>-</span>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Ändra</a> |
+    <a asp-action="Index">Gå tillbaka</a>
+</div>
