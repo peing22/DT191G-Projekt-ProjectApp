@@ -25,9 +25,8 @@ namespace MyApp.Namespace
                 return NotFound();
             }
 
-            // Hämtar alla projekt inklusive relaterade språk från databasen
+            // Hämtar alla projekt från databasen och formaterar resultatet
             var projects = await _context.Projects
-                .Include(p => p.Techniques.OrderBy(t => t.Name))
                 .Select(p => new
                 {
                     id = p.Id,
@@ -35,7 +34,7 @@ namespace MyApp.Namespace
                     description = p.Description,
                     url = p.Url,
                     imageName = p.ImageName,
-                    techniques = p.Techniques.Select(t => t.Name).ToList()
+                    techniques = p.Techniques.OrderBy(t => t.Name).Select(t => t.Name).ToList()
                 })
                 .ToListAsync();
 
