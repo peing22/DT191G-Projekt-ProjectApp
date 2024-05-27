@@ -1,4 +1,4 @@
-# DT191G Projekt - ProjectApp
+# Mitt CV (admingränssnitt)
 Detta repo innehåller en applikation med en tillhörande SQLite-databas för administration av olika projekt som jag har skapat inom ramen för min utbildning till webbutvecklare. 
 
 Applikationen har konstruerats med ramverken ASP.NET Core och EF Core, designmönstret MVC och funktionaliteten Identity som används för hantering av autentisering och användaridentiteter i applikationen.
